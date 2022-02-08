@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>player.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+player.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">turtle </span><span class="s0">import </span><span class="s1">Turtle</span>
+
+<span class="s1">STARTING_POSITION = (</span><span class="s2">0</span><span class="s0">, </span><span class="s1">-</span><span class="s2">280</span><span class="s1">)</span>
+<span class="s1">MOVE_DISTANCE = </span><span class="s2">10</span>
+<span class="s1">FINISH_LINE_Y = </span><span class="s2">280</span>
+
+
+<span class="s0">class </span><span class="s1">Player(Turtle):</span>
+    <span class="s0">def </span><span class="s1">__init__(self):</span>
+        <span class="s1">super().__init__()</span>
+        <span class="s0">pass</span>
+
+    <span class="s0">def </span><span class="s1">create_player(self):</span>
+        <span class="s1">self.color(</span><span class="s3">&quot;black&quot;</span><span class="s1">)</span>
+        <span class="s1">self.shape(</span><span class="s3">&quot;turtle&quot;</span><span class="s1">)</span>
+        <span class="s1">self.penup()</span>
+        <span class="s1">self.setposition(STARTING_POSITION)</span>
+        <span class="s1">self.setheading(</span><span class="s2">90</span><span class="s1">)</span>
+
+    <span class="s0">def </span><span class="s1">move_player(self):</span>
+        <span class="s1">self.forward(MOVE_DISTANCE)</span>
+
+    <span class="s0">def </span><span class="s1">player_reset(self):</span>
+        <span class="s1">self.clear()</span>
+        <span class="s1">self.reset()</span>
+</pre>
+</body>
+</html>

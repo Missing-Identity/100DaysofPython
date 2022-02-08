@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>car_manager.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+car_manager.py</font>
+</center></td></tr></table>
+<pre><span class="s0">from </span><span class="s1">turtle </span><span class="s0">import </span><span class="s1">Turtle</span>
+<span class="s0">import </span><span class="s1">random</span>
+
+<span class="s1">COLORS = [</span><span class="s2">&quot;red&quot;</span><span class="s0">, </span><span class="s2">&quot;orange&quot;</span><span class="s0">, </span><span class="s2">&quot;yellow&quot;</span><span class="s0">, </span><span class="s2">&quot;green&quot;</span><span class="s0">, </span><span class="s2">&quot;blue&quot;</span><span class="s0">, </span><span class="s2">&quot;purple&quot;</span><span class="s1">]</span>
+
+
+<span class="s0">class </span><span class="s1">CarManager:</span>
+    <span class="s0">def </span><span class="s1">__init__(self):</span>
+        <span class="s1">self.number_of_cars = random.randint(</span><span class="s3">5</span><span class="s0">, </span><span class="s3">15</span><span class="s1">)</span>
+        <span class="s1">self.cars = []</span>
+        <span class="s1">self.starting_move_distance = </span><span class="s3">5</span>
+        <span class="s1">self.move_increment = </span><span class="s3">10</span>
+        <span class="s1">self.level_tracker = </span><span class="s3">1</span>
+        <span class="s0">pass</span>
+
+    <span class="s0">def </span><span class="s1">car_creator(self):</span>
+        <span class="s1">car = Turtle(</span><span class="s2">&quot;square&quot;</span><span class="s1">)</span>
+        <span class="s1">car.penup()</span>
+        <span class="s1">car.color(random.choice(COLORS))</span>
+        <span class="s1">initial_car_position_left = (-</span><span class="s3">280</span><span class="s0">, </span><span class="s1">random.randint(-</span><span class="s3">260</span><span class="s0">, </span><span class="s3">260</span><span class="s1">))</span>
+        <span class="s1">initial_car_position_right = (</span><span class="s3">280</span><span class="s0">, </span><span class="s1">random.randint(-</span><span class="s3">260</span><span class="s0">, </span><span class="s3">260</span><span class="s1">))</span>
+        <span class="s1">car.resizemode(</span><span class="s2">&quot;user&quot;</span><span class="s1">)</span>
+        <span class="s1">car.shapesize(stretch_len=random.randint(</span><span class="s3">1</span><span class="s0">, </span><span class="s3">2</span><span class="s1">)</span><span class="s0">, </span><span class="s1">stretch_wid=</span><span class="s3">1</span><span class="s1">)</span>
+        <span class="s1">side_picker = random.randint(</span><span class="s3">0</span><span class="s0">, </span><span class="s3">1</span><span class="s1">)</span>
+        <span class="s0">if </span><span class="s1">side_picker == </span><span class="s3">0</span><span class="s1">:</span>
+            <span class="s1">car.setposition(initial_car_position_left)</span>
+            <span class="s1">car.setheading(</span><span class="s3">0</span><span class="s1">)</span>
+        <span class="s0">else</span><span class="s1">:</span>
+            <span class="s1">car.setposition(initial_car_position_right)</span>
+            <span class="s1">car.setheading(</span><span class="s3">180</span><span class="s1">)</span>
+        <span class="s1">self.cars.append(car)</span>
+
+    <span class="s0">def </span><span class="s1">car_move(self</span><span class="s0">, </span><span class="s1">level):</span>
+        <span class="s0">if </span><span class="s1">self.level_tracker == level:</span>
+            <span class="s1">self.car_move_loop()</span>
+        <span class="s0">else</span><span class="s1">:</span>
+            <span class="s1">self.starting_move_distance = self.starting_move_distance + self.move_increment</span>
+            <span class="s1">self.level_tracker = level</span>
+            <span class="s1">self.car_move_loop()</span>
+
+    <span class="s0">def </span><span class="s1">continuous_car_spawn(self):</span>
+        <span class="s1">self.car_creator()</span>
+
+    <span class="s0">def </span><span class="s1">car_move_loop(self):</span>
+        <span class="s0">for </span><span class="s1">car </span><span class="s0">in </span><span class="s1">self.cars:</span>
+            <span class="s1">car.forward(self.starting_move_distance)</span>
+
+    <span class="s0">def </span><span class="s1">car_reset(self):</span>
+        <span class="s0">for </span><span class="s1">car </span><span class="s0">in </span><span class="s1">self.cars:</span>
+            <span class="s1">car.ht()</span>
+        <span class="s1">self.cars.clear()</span>
+</pre>
+</body>
+</html>

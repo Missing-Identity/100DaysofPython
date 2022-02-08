@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #808080;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">random</span>
+<span class="s0">import </span><span class="s1">time</span>
+<span class="s0">from </span><span class="s1">turtle </span><span class="s0">import </span><span class="s1">Screen</span>
+<span class="s0">from </span><span class="s1">player </span><span class="s0">import </span><span class="s1">Player</span>
+<span class="s0">from </span><span class="s1">car_manager </span><span class="s0">import </span><span class="s1">CarManager</span>
+<span class="s0">from </span><span class="s1">scoreboard </span><span class="s0">import </span><span class="s1">Scoreboard</span>
+
+<span class="s1">screen = Screen()</span>
+<span class="s1">screen.setup(width=</span><span class="s2">600</span><span class="s0">, </span><span class="s1">height=</span><span class="s2">600</span><span class="s1">)</span>
+<span class="s1">screen.listen()</span>
+<span class="s1">screen.tracer(</span><span class="s2">0</span><span class="s1">)</span>
+
+<span class="s3"># Setting up objects</span>
+<span class="s1">player = Player()</span>
+<span class="s1">cars = CarManager()</span>
+<span class="s1">score = Scoreboard()</span>
+
+<span class="s3"># Car Spawns</span>
+<span class="s1">level_difficulty_car_spawn = </span><span class="s2">8</span>
+<span class="s1">level = </span><span class="s2">1</span>
+
+<span class="s3"># Player Spawn</span>
+<span class="s1">player.create_player()</span>
+
+<span class="s3"># Initial Score Board</span>
+<span class="s1">score.initial_text()</span>
+<span class="s1">score.score(level)</span>
+
+<span class="s1">game_is_on = </span><span class="s0">True</span>
+<span class="s0">while </span><span class="s1">game_is_on:</span>
+    <span class="s1">time.sleep(</span><span class="s2">0.1</span><span class="s1">)</span>
+    <span class="s1">screen.update()</span>
+    <span class="s1">cars.car_move(level)</span>
+    <span class="s1">screen.onkeypress(player.move_player</span><span class="s0">, </span><span class="s4">&quot;space&quot;</span><span class="s1">)</span>
+    <span class="s1">create_car = random.randint(</span><span class="s2">0</span><span class="s0">, </span><span class="s1">level_difficulty_car_spawn)</span>
+    <span class="s0">if </span><span class="s1">create_car == </span><span class="s2">0</span><span class="s1">:</span>
+        <span class="s1">cars.car_creator()</span>
+    <span class="s0">else</span><span class="s1">:</span>
+        <span class="s0">pass</span>
+    <span class="s0">if </span><span class="s1">player.position()[</span><span class="s2">1</span><span class="s1">] &gt;= </span><span class="s2">280</span><span class="s1">:</span>
+        <span class="s1">level += </span><span class="s2">1</span>
+        <span class="s1">score.score(level)</span>
+        <span class="s1">player.player_reset()</span>
+        <span class="s1">cars.car_reset()</span>
+        <span class="s0">if </span><span class="s1">level_difficulty_car_spawn &gt;= </span><span class="s2">2</span><span class="s1">:</span>
+            <span class="s1">level_difficulty_car_spawn -= </span><span class="s2">1</span>
+        <span class="s0">else</span><span class="s1">:</span>
+            <span class="s0">pass</span>
+        <span class="s1">player.create_player()</span>
+    <span class="s0">for </span><span class="s1">car </span><span class="s0">in </span><span class="s1">cars.cars:</span>
+        <span class="s0">if </span><span class="s1">player.distance(car) &lt;= </span><span class="s2">18</span><span class="s1">:</span>
+            <span class="s1">game_is_on = </span><span class="s0">False</span>
+
+<span class="s1">screen.exitonclick()</span>
+</pre>
+</body>
+</html>
