@@ -54,6 +54,13 @@ snake.py</font>
         <span class="s1">tim.goto(position)</span>
         <span class="s1">self.snake_segments.append(tim)</span>
 
+    <span class="s0">def </span><span class="s1">reset(self):</span>
+        <span class="s0">for </span><span class="s1">seg </span><span class="s0">in </span><span class="s1">self.snake_segments:</span>
+            <span class="s1">seg.goto(</span><span class="s2">1000</span><span class="s0">, </span><span class="s2">1000</span><span class="s1">)</span>
+        <span class="s1">self.snake_segments.clear()</span>
+        <span class="s1">self.initial_snake()</span>
+        <span class="s1">self.head = self.snake_segments[</span><span class="s2">0</span><span class="s1">]</span>
+
     <span class="s0">def </span><span class="s1">up(self):</span>
         <span class="s0">if </span><span class="s1">self.head.heading() != down:</span>
             <span class="s1">self.head.setheading(up)</span>
