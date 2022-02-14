@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>nato_phonetic_alphabet.csv</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+nato_phonetic_alphabet.csv</font>
+</center></td></tr></table>
+<pre><span class="s0">letter,code</span>
+<span class="s0">A,Alfa</span>
+<span class="s0">B,Bravo</span>
+<span class="s0">C,Charlie</span>
+<span class="s0">D,Delta</span>
+<span class="s0">E,Echo</span>
+<span class="s0">F,Foxtrot</span>
+<span class="s0">G,Golf</span>
+<span class="s0">H,Hotel</span>
+<span class="s0">I,India</span>
+<span class="s0">J,Juliet</span>
+<span class="s0">K,Kilo</span>
+<span class="s0">L,Lima</span>
+<span class="s0">M,Mike</span>
+<span class="s0">N,November</span>
+<span class="s0">O,Oscar</span>
+<span class="s0">P,Papa</span>
+<span class="s0">Q,Quebec</span>
+<span class="s0">R,Romeo</span>
+<span class="s0">S,Sierra</span>
+<span class="s0">T,Tango</span>
+<span class="s0">U,Uniform</span>
+<span class="s0">V,Victor</span>
+<span class="s0">W,Whiskey</span>
+<span class="s0">X,X-ray</span>
+<span class="s0">Y,Yankee</span>
+<span class="s0">Z,Zulu</span></pre>
+</body>
+</html>
