@@ -1,72 +1,107 @@
-<html>
-<head>
-<title>main.py</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<style type="text/css">
-.s0 { color: #808080;}
-.s1 { color: #a9b7c6;}
-.s2 { color: #cc7832;}
-.s3 { color: #6a8759;}
-.s4 { color: #6897bb;}
-</style>
-</head>
-<body bgcolor="#2b2b2b">
-<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
-<tr><td><center>
-<font face="Arial, Helvetica" color="#000000">
-main.py</font>
-</center></td></tr></table>
-<pre><span class="s0"># Importing libraries</span>
-<span class="s2">import </span><span class="s1">pandas</span>
-<span class="s2">import </span><span class="s1">turtle</span>
-<span class="s2">from </span><span class="s1">turtle </span><span class="s2">import </span><span class="s1">Turtle</span>
+from tkinter import *
+from random import randint
+import pandas
 
-<span class="s0"># Screen Setup</span>
-<span class="s1">screen = turtle.Screen()</span>
-<span class="s1">screen.title(</span><span class="s3">&quot;US States Game&quot;</span><span class="s1">)</span>
-<span class="s1">image = </span><span class="s3">&quot;blank_states_img.gif&quot;</span>
-<span class="s1">screen.addshape(image)  </span><span class="s0"># Adding custom shape to turtle</span>
-<span class="s1">turtle.shape(image)</span>
+BACKGROUND_COLOR = "#B1DDC6"
 
-<span class="s0"># Game setup</span>
-<span class="s1">game_is_on = </span><span class="s2">True</span>
-<span class="s1">state_data = pandas.read_csv(</span><span class="s3">&quot;50_states.csv&quot;</span><span class="s1">)</span>
-<span class="s1">state_name = []</span>
-<span class="s1">missed_states = []</span>
-<span class="s1">name = Turtle()</span>
-<span class="s1">name.ht()</span>
-<span class="s1">score = </span><span class="s4">0</span>
+window = Tk()
+window.title("Flash Card App")
+window.config(padx=50, pady=20, bg=BACKGROUND_COLOR, width=1000, height=1300)
+
+# -------------------------------------------Convert CSV data to dict------------------------------------------------- #
+
+try:
+    data = pandas.read_csv("./data/words_to_learn.csv")
+    words_dict = data.to_dict()
+    print(words_dict)
+except FileNotFoundError:
+    data = pandas.read_csv("./data/french_words.csv")  # Reading data from CSV if words to learn doesn't exist
+    words_dict = data.to_dict()
+    print(words_dict)
+
+# -------------------------------------------------Text on Canvas----------------------------------------------------- #
+word_index = 0
+eng_or_fre = 0
 
 
-<span class="s2">while </span><span class="s1">game_is_on:</span>
-    <span class="s1">answer = screen.textinput(title=</span><span class="s3">f&quot;</span><span class="s2">{</span><span class="s1">score</span><span class="s2">}</span><span class="s3">/50 States Correct&quot;</span><span class="s2">, </span><span class="s1">prompt=</span><span class="s3">&quot;What's another state's name?&quot;</span><span class="s1">)</span>
-    <span class="s2">if </span><span class="s1">answer.title() == </span><span class="s3">&quot;Exit&quot;</span><span class="s1">:</span>
-        <span class="s2">break</span>
-    <span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(</span><span class="s4">0</span><span class="s2">, </span><span class="s1">len(state_data)):</span>
-        <span class="s2">if </span><span class="s1">len(state_name) == len(state_data):</span>
-            <span class="s1">game_is_on = </span><span class="s2">False</span>
-            <span class="s1">print(</span><span class="s3">&quot;You win! Congratulations!&quot;</span><span class="s1">)</span>
-            <span class="s2">break</span>
-        <span class="s2">if </span><span class="s1">answer.title() == state_data.state[i]:</span>
-            <span class="s2">if </span><span class="s1">answer.title() </span><span class="s2">in </span><span class="s1">state_name:</span>
-                <span class="s2">break</span>
-            <span class="s1">name.penup()</span>
-            <span class="s1">name.goto(state_data.x[i]</span><span class="s2">, </span><span class="s1">state_data.y[i])</span>
-            <span class="s1">name.write(</span><span class="s3">f&quot;</span><span class="s2">{</span><span class="s1">state_data.state[i]</span><span class="s2">}</span><span class="s3">&quot;</span><span class="s2">, </span><span class="s1">move=</span><span class="s2">True</span><span class="s1">)</span>
-            <span class="s1">state_name.append(answer.title())</span>
-            <span class="s1">score += </span><span class="s4">1</span>
-
-<span class="s0"># Missed states</span>
-<span class="s2">for </span><span class="s1">i </span><span class="s2">in </span><span class="s1">range(len(state_data)):</span>
-    <span class="s2">if </span><span class="s1">state_data.state[i] </span><span class="s2">in </span><span class="s1">state_name:</span>
-        <span class="s2">pass</span>
-    <span class="s2">else</span><span class="s1">:</span>
-        <span class="s1">missed_states.append(state_data.state[i])</span>
-        <span class="s1">missed_csv = pandas.DataFrame(missed_states)</span>
-        <span class="s1">missed_csv.to_csv(</span><span class="s3">&quot;Missed_States.csv&quot;</span><span class="s1">)</span>
+def random_number_gen():
+    global word_index
+    word_index = randint(0, len(data["French"]))
 
 
-<span class="s1">turtle.mainloop()</span>
-</pre>
-</body>
-</html>
+def french_text_gen():
+    global eng_or_fre
+    word.config(width=400, height=200, bg="white", highlightthickness=0)
+    word.create_text(200, 30, text="French", font=("Avenir", 30, "normal"), fill="grey")
+    word.create_text(200, 120, text=words_dict["French"][word_index], font=("Avenir", 40, "bold"), fill="black")
+    eng_or_fre = 0
+    window.after(5000, func=flip)
+
+
+def english_text_gen():
+    global eng_or_fre
+    word.config(width=400, height=200, bg="#83C4AE", highlightthickness=0)
+    word.create_text(200, 30, text="English", font=("Avenir", 30, "normal"), fill="yellow")
+    word.create_text(200, 120, text=words_dict["English"][word_index], font=("Avenir", 40, "bold"), fill="white")
+    eng_or_fre = 1
+
+
+# -----------------------------------------Word on button click generator--------------------------------------------- #
+
+
+def right_word_gen():
+    words_dict["French"].pop(word_index)  # Removing known words from dict
+    words_dict["English"].pop(word_index)
+    print(words_dict)
+    learnt_data = pandas.DataFrame(words_dict)
+    learnt_data.to_csv("./data/words_to_learn.csv", index=False)
+    word.delete('all')
+    random_number_gen()
+    canvas.itemconfig(canvas_image, image=front_card_img)
+    french_text_gen()
+
+
+def wrong_word_gen():
+    word.delete('all')
+    random_number_gen()
+    canvas.itemconfig(canvas_image, image=front_card_img)
+    french_text_gen()
+
+
+# --------------------------------------------------Card Flip--------------------------------------------------------- #
+
+def flip():
+    global eng_or_fre
+    if eng_or_fre == 0:
+        word.delete('all')
+        canvas.itemconfig(canvas_image, image=back_card_img)
+        english_text_gen()
+
+
+# -----------------------------------------Application Design/Layout-------------------------------------------------- #
+
+# Canvas Image - Card
+canvas = Canvas(width=800, height=600, bg=BACKGROUND_COLOR, highlightthickness=0)
+front_card_img = PhotoImage(file="./images/card_front.png")
+canvas_image = canvas.create_image(400, 300, image=front_card_img)
+back_card_img = PhotoImage(file="./images/card_back.png")
+
+# Canvas Text
+word = Canvas(width=400, height=200, bg="white", highlightthickness=0)
+french_text_gen()
+
+# Buttons
+right_img = PhotoImage(file="./images/right.png")
+wrong_img = PhotoImage(file="./images/wrong.png")
+right_button = Button(image=right_img, bg=BACKGROUND_COLOR, highlightthickness=0, highlightbackground=BACKGROUND_COLOR,
+                      command=right_word_gen)
+wrong_button = Button(image=wrong_img, bg=BACKGROUND_COLOR, highlightthickness=0, highlightbackground=BACKGROUND_COLOR,
+                      command=wrong_word_gen)
+
+# Grids
+canvas.grid(column=0, row=0, columnspan=2)
+right_button.grid(column=1, row=1)
+wrong_button.grid(column=0, row=1)
+word.grid(column=0, row=0, columnspan=2)
+
+window.mainloop()
