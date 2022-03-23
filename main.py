@@ -1,107 +1,54 @@
-from tkinter import *
-from random import randint
-import pandas
+<html>
+<head>
+<title>main.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+main.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">smtplib</span>
+<span class="s0">import </span><span class="s1">random</span>
+<span class="s0">import </span><span class="s1">datetime </span><span class="s0">as </span><span class="s1">dt</span>
+<span class="s0">import </span><span class="s1">pandas</span>
 
-BACKGROUND_COLOR = "#B1DDC6"
+<span class="s2"># Letter Picker and Placeholder</span>
+<span class="s1">letter_number = random.randint(</span><span class="s3">1</span><span class="s0">, </span><span class="s3">3</span><span class="s1">)</span>
+<span class="s1">placeholder = </span><span class="s4">&quot;[NAME]&quot;</span>
 
-window = Tk()
-window.title("Flash Card App")
-window.config(padx=50, pady=20, bg=BACKGROUND_COLOR, width=1000, height=1300)
+<span class="s2"># Mail login and password</span>
+<span class="s1">my_email = </span><span class="s4">&quot;ogprime8623@gmail.com&quot;</span>
+<span class="s1">password = </span><span class="s4">&quot;Spidey8623&quot;</span>
 
-# -------------------------------------------Convert CSV data to dict------------------------------------------------- #
+<span class="s2"># CSV reader and date checker</span>
+<span class="s1">csv_data = pandas.read_csv(</span><span class="s4">&quot;birthdays.csv&quot;</span><span class="s1">)</span>
+<span class="s1">today = dt.datetime.now()</span>
 
-try:
-    data = pandas.read_csv("./data/words_to_learn.csv")
-    words_dict = data.to_dict()
-    print(words_dict)
-except FileNotFoundError:
-    data = pandas.read_csv("./data/french_words.csv")  # Reading data from CSV if words to learn doesn't exist
-    words_dict = data.to_dict()
-    print(words_dict)
-
-# -------------------------------------------------Text on Canvas----------------------------------------------------- #
-word_index = 0
-eng_or_fre = 0
-
-
-def random_number_gen():
-    global word_index
-    word_index = randint(0, len(data["French"]))
-
-
-def french_text_gen():
-    global eng_or_fre
-    word.config(width=400, height=200, bg="white", highlightthickness=0)
-    word.create_text(200, 30, text="French", font=("Avenir", 30, "normal"), fill="grey")
-    word.create_text(200, 120, text=words_dict["French"][word_index], font=("Avenir", 40, "bold"), fill="black")
-    eng_or_fre = 0
-    window.after(5000, func=flip)
-
-
-def english_text_gen():
-    global eng_or_fre
-    word.config(width=400, height=200, bg="#83C4AE", highlightthickness=0)
-    word.create_text(200, 30, text="English", font=("Avenir", 30, "normal"), fill="yellow")
-    word.create_text(200, 120, text=words_dict["English"][word_index], font=("Avenir", 40, "bold"), fill="white")
-    eng_or_fre = 1
-
-
-# -----------------------------------------Word on button click generator--------------------------------------------- #
-
-
-def right_word_gen():
-    words_dict["French"].pop(word_index)  # Removing known words from dict
-    words_dict["English"].pop(word_index)
-    print(words_dict)
-    learnt_data = pandas.DataFrame(words_dict)
-    learnt_data.to_csv("./data/words_to_learn.csv", index=False)
-    word.delete('all')
-    random_number_gen()
-    canvas.itemconfig(canvas_image, image=front_card_img)
-    french_text_gen()
-
-
-def wrong_word_gen():
-    word.delete('all')
-    random_number_gen()
-    canvas.itemconfig(canvas_image, image=front_card_img)
-    french_text_gen()
-
-
-# --------------------------------------------------Card Flip--------------------------------------------------------- #
-
-def flip():
-    global eng_or_fre
-    if eng_or_fre == 0:
-        word.delete('all')
-        canvas.itemconfig(canvas_image, image=back_card_img)
-        english_text_gen()
-
-
-# -----------------------------------------Application Design/Layout-------------------------------------------------- #
-
-# Canvas Image - Card
-canvas = Canvas(width=800, height=600, bg=BACKGROUND_COLOR, highlightthickness=0)
-front_card_img = PhotoImage(file="./images/card_front.png")
-canvas_image = canvas.create_image(400, 300, image=front_card_img)
-back_card_img = PhotoImage(file="./images/card_back.png")
-
-# Canvas Text
-word = Canvas(width=400, height=200, bg="white", highlightthickness=0)
-french_text_gen()
-
-# Buttons
-right_img = PhotoImage(file="./images/right.png")
-wrong_img = PhotoImage(file="./images/wrong.png")
-right_button = Button(image=right_img, bg=BACKGROUND_COLOR, highlightthickness=0, highlightbackground=BACKGROUND_COLOR,
-                      command=right_word_gen)
-wrong_button = Button(image=wrong_img, bg=BACKGROUND_COLOR, highlightthickness=0, highlightbackground=BACKGROUND_COLOR,
-                      command=wrong_word_gen)
-
-# Grids
-canvas.grid(column=0, row=0, columnspan=2)
-right_button.grid(column=1, row=1)
-wrong_button.grid(column=0, row=1)
-word.grid(column=0, row=0, columnspan=2)
-
-window.mainloop()
+<span class="s0">for </span><span class="s1">num </span><span class="s0">in </span><span class="s1">range(</span><span class="s3">0</span><span class="s0">, </span><span class="s1">len(csv_data)):  </span><span class="s2"># Go through all rows in CSV</span>
+    <span class="s0">if </span><span class="s1">csv_data.month[num] == today.month </span><span class="s0">and </span><span class="s1">csv_data.day[num] == today.day:  </span><span class="s2"># Check for matching date</span>
+        <span class="s1">name = csv_data.name[num]  </span><span class="s2"># Set name variable if found</span>
+        <span class="s0">with </span><span class="s1">open(</span><span class="s4">f&quot;../emailHappyBirthday/letter_templates/letter_</span><span class="s0">{</span><span class="s1">letter_number</span><span class="s0">}</span><span class="s4">.txt&quot;</span><span class="s0">, </span><span class="s1">mode=</span><span class="s4">'r'</span><span class="s1">) </span><span class="s0">as </span><span class="s1">file:</span>
+            <span class="s1">content = file.read()</span>
+            <span class="s1">new_content = content.replace(placeholder</span><span class="s0">, </span><span class="s1">name)  </span><span class="s2"># Replace placeholder name with actual</span>
+            <span class="s0">with </span><span class="s1">open(</span><span class="s4">f&quot;../emailHappyBirthday/final_letters/letter-</span><span class="s0">{</span><span class="s1">letter_number</span><span class="s0">}</span><span class="s4">.txt&quot;</span><span class="s0">, </span><span class="s1">mode=</span><span class="s4">'w'</span><span class="s1">) </span><span class="s0">as </span><span class="s1">new_file:</span>
+                <span class="s1">new_file.write(new_content)  </span><span class="s2"># Create a new txt file with changed name</span>
+        <span class="s0">with </span><span class="s1">open(</span><span class="s4">f&quot;../emailHappyBirthday/final_letters/letter-</span><span class="s0">{</span><span class="s1">letter_number</span><span class="s0">}</span><span class="s4">.txt&quot;</span><span class="s0">, </span><span class="s1">mode=</span><span class="s4">'r'</span><span class="s1">) </span><span class="s0">as </span><span class="s1">mail_file:</span>
+            <span class="s1">letter = mail_file.read()</span>
+            <span class="s1">letter = str(letter)</span>
+            <span class="s0">with </span><span class="s1">smtplib.SMTP(</span><span class="s4">&quot;smtp.gmail.com&quot;</span><span class="s0">, </span><span class="s1">port=</span><span class="s3">587</span><span class="s1">) </span><span class="s0">as </span><span class="s1">connection:  </span><span class="s2"># Connecting to gmail smtp</span>
+                <span class="s1">connection.starttls()  </span><span class="s2"># Transport Layer Security</span>
+                <span class="s1">connection.login(user=my_email</span><span class="s0">, </span><span class="s1">password=password)  </span><span class="s2"># Login to your mail</span>
+                <span class="s1">connection.sendmail(from_addr=my_email</span><span class="s0">, </span><span class="s1">to_addrs=</span><span class="s4">&quot;ogprime8623@gmail.com&quot;</span><span class="s0">,</span>
+                                    <span class="s1">msg=</span><span class="s4">f&quot;Subject: Birthday Wishes</span><span class="s0">\n\n{</span><span class="s1">letter</span><span class="s0">}</span><span class="s4">&quot;</span><span class="s1">)  </span><span class="s2"># Send the mail</span>
+</pre>
+</body>
+</html>
