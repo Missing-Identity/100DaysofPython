@@ -1,28 +1,46 @@
-class Quizbrain:
-    def __init__(self, q_list):
-        self.question_number = 0
-        self.question_list = q_list
-        self.score = 0
+<html>
+<head>
+<title>quiz_brain.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+quiz_brain.py</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">html</span>
 
-    def next_question(self):
-        current_question = self.question_list[self.question_number]
-        self.question_number += 1
-        answer = input("Q."+str(self.question_number)+" "+current_question.text+"(True or False)?").title()
-        self.check_answer(answer, self.question_list[self.question_number-1].answer)
 
-    def still_has_questions(self):
-        length = len(self.question_list)
-        if self.question_number == length:
-            return False
-        else:
-            return True
+<span class="s0">class </span><span class="s1">QuizBrain:</span>
 
-    def check_answer(self, user_answer, correct_answer):
-        if user_answer == correct_answer:
-            print("You got it right!")
-            self.score += 1
-        else:
-            print("That's wrong!")
-        print(f"The correct answer is: {correct_answer}")
-        print(f"Your current score is {self.score}/{self.question_number}")
-        print("\n")
+    <span class="s0">def </span><span class="s1">__init__(self</span><span class="s0">, </span><span class="s1">q_list):</span>
+        <span class="s1">self.question_number = </span><span class="s2">0</span>
+        <span class="s1">self.score = </span><span class="s2">0</span>
+        <span class="s1">self.question_list = q_list</span>
+        <span class="s1">self.current_question = </span><span class="s0">None</span>
+
+    <span class="s0">def </span><span class="s1">still_has_questions(self):</span>
+        <span class="s0">return </span><span class="s1">self.question_number &lt; len(self.question_list)</span>
+
+    <span class="s0">def </span><span class="s1">next_question(self):</span>
+        <span class="s1">self.current_question = self.question_list[self.question_number]</span>
+        <span class="s1">self.question_number += </span><span class="s2">1</span>
+        <span class="s1">q_text = html.unescape(self.current_question.text)</span>
+        <span class="s0">return </span><span class="s3">f&quot;Q.</span><span class="s0">{</span><span class="s1">self.question_number</span><span class="s0">}</span><span class="s3">: </span><span class="s0">{</span><span class="s1">q_text</span><span class="s0">} </span><span class="s3">(True/False): &quot;</span>
+
+    <span class="s0">def </span><span class="s1">check_answer(self</span><span class="s0">, </span><span class="s1">user_answer):</span>
+        <span class="s1">correct_answer = self.current_question.answer</span>
+        <span class="s0">if </span><span class="s1">user_answer.lower() == correct_answer.lower():</span>
+            <span class="s0">return True</span>
+        <span class="s0">else</span><span class="s1">:</span>
+            <span class="s0">return False</span>
+</pre>
+</body>
+</html>
